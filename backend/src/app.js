@@ -10,9 +10,10 @@ app.use("/hi", (re, res) => {
     res.send("Hi there!");
 })
 
-app.get('/', (req, res) => {
-    console.log("Hello devs");
+app.use('/', (req, res) => {
+    res.send("Dashboard")
 })
+
 
 app.listen(port , () => {
     console.log("Server is listening on port " + port);
