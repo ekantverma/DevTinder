@@ -12,5 +12,8 @@
   ],
   "author": "Ekant Verma",
   "license": "ISC",
-  "description": "This is tinder for developers"
+  "description": "This is tinder for developers",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
 }
