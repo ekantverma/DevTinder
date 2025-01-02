@@ -2,12 +2,16 @@ const express  = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use("/hello", (req, res) => {
-    res.send("Welcome to the Node.js Server");
+app.get("/user", (req, res) => {
+    res.send("Data sucessfully fetched!");
 })
 
-app.use("/hi", (re, res) => {
-    res.send("Hi there!");
+app.post("/user", (req, res) => {
+    res.send("Data succesfully saved to database!");
+})
+
+app.delete("/user", (req, res) =>{
+    res.send("Data succesfully deleted from database!");
 })
 
 app.use('/', (req, res) => {
