@@ -6,14 +6,6 @@ app.get("/user", (req, res) => {
     res.send("Data sucessfully fetched!");
 })
 
-app.post("/user", (req, res) => {
-    res.send("Data succesfully saved to database!");
-})
-
-app.delete("/user", (req, res) =>{
-    res.send("Data succesfully deleted from database!");
-})
-
 app.use('/', (req, res) => {
     res.send("Dashboard")
 })
