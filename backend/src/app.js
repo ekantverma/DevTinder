@@ -2,41 +2,32 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 
-// app.use(
-//   "/",
-//   [(req, res, next) => {
-//     next();
-//     res.send("1st Handler");
-//   },
-//   (req, res, next) => {
-//     res.send("2nd Handler");
-//     next();
-//   }],
-//   (req, res, next) => {
-//     next();
-//     res.send("3rd Handler");
-//   },
-//   (req, res, next) => {
-//     res.send("4th Handler");
-//     next();
-//   }
-// );
+// Middleware when we request any admin api the middleware will be called for all the routes get patch put requests.
+app.use("/admin", (req, res, next) => {
+  console.log("User is authenticated")
+  const admin = "xyz";
+  const isAuth = admin === "xyz";
+  if(!isAuth){
+    res.status(401).send("User is not authorized");
+  } else {
+    next();
+  }
+})
 
-const hr1 = (req, res, next) => {
-    next();
-    res.send("1st handler")
-}
-const hr2 = (req, res, next) => {
-    res.send("2nd handler")
-    next();
-}
-const hr3 = (req, res, next) => {
-    next();
-    res.send("3rd handler")
-}
+app.get("/admin/getData", (req, res) => {
+  res.send("Data send to admin!")
+})
 
-app.use("/user", [hr1, hr2], hr3);
+app.get("/admin/deleteData", (req, res) => {
+  res.send("Data deleted!")
+})
 
 app.listen(port, () => {
   console.log("Server is listening on port " + port);
 });
+
+
+
+
+
+
