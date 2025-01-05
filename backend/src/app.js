@@ -73,8 +73,8 @@ app.patch("/user/:userId", async (req, res) => {
     if (!isUpdateAllowed) {
       throw new error("Update is not allowed for this query!");
     }
-    if(data?.skills.length > 15){
-      throw new error("More skills not allowed");
+    if (data.skills && data.skills.length > 15) {
+      throw new Error("More skills not allowed");
     }
 
     const updatedUser = await User.findByIdAndUpdate({ _id: userId }, data, {
@@ -83,7 +83,8 @@ app.patch("/user/:userId", async (req, res) => {
     });
     console.log(updatedUser);
   } catch (err) {
-    res.status(400).send("Something went wrong." + err.message);
+    console.error("Error while updating user data:", err);
+    res.status(500).send("Server Error");
   }
 });
 

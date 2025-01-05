@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const userSchema = new mongoose.Schema(
   {
@@ -54,6 +55,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       default:
         "https://i.pinimg.com/736x/0a/a8/58/0aa8581c2cb0aa948d63ce3ddad90c81.jpg",
+      validate(value){
+        if(!validator.isURL(value)){
+          throw new Error("Invalid photo URL format" + value);
+        }
+      }
     },
     about: {
       type: String,
