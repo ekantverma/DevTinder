@@ -57,8 +57,10 @@ app.delete("/user", async (req, res) => {
 app.patch("/user", async (req, res) => {
   const userId = req.body.userId;
   const data = req.body;
+  console.log(data + userId);
   try{
     const updatedUser = await User.findByIdAndUpdate(userId, data, returnDocument = "after");
+    runValidators = true;
     console.log(updatedUser);
   } catch(err) {
     res.status(400).send("Something went wrong.");
