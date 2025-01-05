@@ -23,6 +23,15 @@ const userSchema = new mongoose.Schema({
   gender: { 
     type: String
   },
+  photoUrl: {
+    type: String,
+    default: ''
+  }, 
+  about: {
+    type: String,
+    default: "This is default about!"
+  },
+  skills: [String]
 });
 
 module.exports = mongoose.model("User", userSchema);
