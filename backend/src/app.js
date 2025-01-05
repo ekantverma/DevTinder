@@ -16,7 +16,7 @@ app.post("/signup", async (req, res) => {
     res.send("User data saved successfully");
   } catch (err) {
     console.error("Error while saving user data:", err);
-    res.status(500).send("Server Error");
+    res.status(500).send("Server Error" + err.message);
   }
 });
 
@@ -56,7 +56,6 @@ app.delete("/user", async (req, res) => {
 app.patch("/user", async (req, res) => {
   const userId = req.body.userId;
   const data = req.body;
-  console.log(data);
   try {
     const updatedUser = await User.findByIdAndUpdate({ _id: userId }, data, {
       returnDocument: "after",
@@ -64,7 +63,7 @@ app.patch("/user", async (req, res) => {
     });
     console.log(updatedUser);
   } catch (err) {
-    res.status(400).send("Something went wrong.");
+    res.status(400).send("Something went wrong." + err.message);
   }
 });
 
