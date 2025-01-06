@@ -5,6 +5,7 @@ const port = process.env.PORT || 3000;
 const User = require("./models/user");
 const {validateSignupData} = require("./utils/validation");
 const bcrypt = require('bcrypt');
+const validator = require("validator");
 
 app.use(express.json());
 
@@ -31,6 +32,33 @@ app.post("/signup", async (req, res) => {
     res.status(400).send("Error: " + err.message);
   }
 });
+
+// Login api
+app.post("/login", async (req, res) => {
+  try{
+    const {email, password} = req.body;
+
+    if(!validator.isEmail(email)){
+      throw new error("Invalid email");
+    }
+    // checking user is already in the database
+    const user = await User.findOne({email: email});
+    if(!user){
+      throw new error("Invalid credentials");
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if(isPasswordValid){
+      res.send("Login successful");
+    }else {
+      throw new error("Invalid credentials");
+    }
+
+  } catch (err) {
+    res.status(400).send("Error: " + err.message);
+  }
+})
 
 // Get api to find user by email from database
 app.get("/user", async (req, res) => {
