@@ -16,6 +16,7 @@
   "license": "ISC",
   "description": "This is tinder for developers",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.21.2",
     "install": "^0.13.0",
     "mongoose": "^8.9.3",
