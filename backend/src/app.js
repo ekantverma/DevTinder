@@ -9,7 +9,7 @@ const validator = require("validator");
 const cookies = require("cookie-parser")
 
 app.use(express.json());
-app.use(cookies);
+app.use(cookies());
 
 // Signup API
 app.post("/signup", async (req, res) => {
@@ -67,10 +67,14 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/profile", (req, res) => {
+  try{
   const cookie = req.cookies;
   console.log(cookie);
 
   res.send("Cookie reading");
+  } catch(err) {
+    res.status(400).send("Error: " + err.message);
+  }
 
 })
 
