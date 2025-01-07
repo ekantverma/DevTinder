@@ -17,6 +17,7 @@
   "description": "This is tinder for developers",
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
     "express": "^4.21.2",
     "install": "^0.13.0",
     "mongoose": "^8.9.3",

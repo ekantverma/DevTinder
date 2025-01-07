@@ -6,8 +6,10 @@ const User = require("./models/user");
 const { validateSignupData } = require("./utils/validation");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
+const cookies = require("cookie-parser")
 
 app.use(express.json());
+app.use(cookies);
 
 // Signup API
 app.post("/signup", async (req, res) => {
@@ -54,14 +56,39 @@ app.post("/login", async (req, res) => {
 
       // Generate a jwt token
       // add token in cookie and send response back to the user
+      res.cookie("token", "xy");
       res.send("Login successful");
     } else {
       throw new error("Invalid credentials");
+<<<<<<< Tabnine <<<<<<<
+/**//+
+ * Handles the profile route. Retrieves and logs cookies, then sends a response.//+
+ *//+
+ * @param {Object} req - The request object containing the cookies.//+
+ * @param {Object} res - The response object to send a response.//+
+ *//+
+ * @returns {void}//+
+ *///+
+app.get("/profile", (req, res) => {//+
+  const cookie = req.cookies;//+
+  console.log(cookie);//+
+//+
+  res.send("Cookie reading");//+
+});//+
+>>>>>>> Tabnine >>>>>>>// {"conversationId":"ba1b36d3-e3f2-441c-b80a-724cfefc6422","source":"instruct"}
     }
   } catch (err) {
     res.status(400).send("Error: " + err.message);
   }
 });
+
+app.get("/profile", (req, res) => {
+  const cookie = req.cookies;
+  console.log(cookie);
+
+  res.send("Cookie reading");
+
+})
 
 // Get api to find user by email from database
 app.get("/user", async (req, res) => {
