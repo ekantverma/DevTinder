@@ -3,8 +3,8 @@ const app = express();
 const connectDB = require("./config/database");
 const port = process.env.PORT || 3000;
 const User = require("./models/user");
-const {validateSignupData} = require("./utils/validation");
-const bcrypt = require('bcrypt');
+const { validateSignupData } = require("./utils/validation");
+const bcrypt = require("bcrypt");
 const validator = require("validator");
 
 app.use(express.json());
@@ -15,7 +15,7 @@ app.post("/signup", async (req, res) => {
     // Validate signup data
     validateSignupData(req);
 
-    const {firstName, lastName, email, password} = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
     // Encrypt password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -23,7 +23,10 @@ app.post("/signup", async (req, res) => {
 
     // Creating a new instance of the user model
     const user = new User({
-      firstName, lastName, email, password: hashedPassword
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
     });
 
     await user.save();
@@ -35,30 +38,30 @@ app.post("/signup", async (req, res) => {
 
 // Login api
 app.post("/login", async (req, res) => {
-  try{
-    const {email, password} = req.body;
+  try {
+    const { email, password } = req.body;
 
-    if(!validator.isEmail(email)){
+    if (!validator.isEmail(email)) {
       throw new error("Invalid email");
     }
     // checking user is already in the database
-    const user = await User.findOne({email: email});
-    if(!user){
+    const user = await User.findOne({ email: email });
+    if (!user) {
       throw new error("Invalid credentials");
     }
-
     const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (isPasswordValid) {
 
-    if(isPasswordValid){
+      // Generate a jwt token
+      // add token in cookie and send response back to the user
       res.send("Login successful");
-    }else {
+    } else {
       throw new error("Invalid credentials");
     }
-
   } catch (err) {
     res.status(400).send("Error: " + err.message);
   }
-})
+});
 
 // Get api to find user by email from database
 app.get("/user", async (req, res) => {
