@@ -60,22 +60,6 @@ app.post("/login", async (req, res) => {
       res.send("Login successful");
     } else {
       throw new error("Invalid credentials");
-<<<<<<< Tabnine <<<<<<<
-/**//+
- * Handles the profile route. Retrieves and logs cookies, then sends a response.//+
- *//+
- * @param {Object} req - The request object containing the cookies.//+
- * @param {Object} res - The response object to send a response.//+
- *//+
- * @returns {void}//+
- *///+
-app.get("/profile", (req, res) => {//+
-  const cookie = req.cookies;//+
-  console.log(cookie);//+
-//+
-  res.send("Cookie reading");//+
-});//+
->>>>>>> Tabnine >>>>>>>// {"conversationId":"ba1b36d3-e3f2-441c-b80a-724cfefc6422","source":"instruct"}
     }
   } catch (err) {
     res.status(400).send("Error: " + err.message);
