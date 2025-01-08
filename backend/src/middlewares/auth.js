@@ -5,10 +5,10 @@ const userAuth = async (req, res, next) => {
   try {
     const { token } = req.cookies;
     if (!token) {
-      throw new Error("Token is not valid!!!");
+      throw new Error("Please login again!");
     }
     const verified = jwt.verify(token, "Dev@Tinder$3000");
-    const user = await User.findById(verified._id);
+    const user = await User.findById(verified.id);
     if (!user) {
       throw new Error("User not found");
     }

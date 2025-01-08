@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
   {
@@ -27,7 +29,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      minLength: 8
+      minLength: 8,
     },
     age: {
       type: Number,
@@ -47,11 +49,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       default:
         "https://i.pinimg.com/736x/0a/a8/58/0aa8581c2cb0aa948d63ce3ddad90c81.jpg",
-      validate(value){
-        if(!validator.isURL(value)){
+      validate(value) {
+        if (!validator.isURL(value)) {
           throw new Error("Invalid photo URL format" + value);
         }
-      }
+      },
     },
     about: {
       type: String,
@@ -63,5 +65,23 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+userSchema.methods.getJWT = async function () {
+  const user = this;
+  const token = await jwt.sign({ id: user._id }, "Dev@Tinder$3000", {
+    expiresIn: "7d",
+  });
+  return token;
+};
+
+userSchema.methods.validatePassword = async function (passwordInputByUser) {
+  const user = this;
+  const passwordHashed = user.password;
+  const isPasswordValid = await bcrypt.compare(
+    passwordInputByUser,
+    passwordHashed
+  );
+  return isPasswordValid;
+};
 
 module.exports = mongoose.model("User", userSchema);
