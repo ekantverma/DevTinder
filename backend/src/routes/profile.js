@@ -33,10 +33,29 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
       message: `${loggedUser.firstName}, Your profile updated successfully!`,
       data: loggedUser,
     });
-    
   } catch (err) {
     res.status(400).send("Error: " + err.message);
   }
+
 });
+
+profileRouter.patch("/profile/forgotPassword", userAuth, async (req, res) => {
+  try{
+    // Logic to reset password goes here
+    const loggedUser = req.user;
+    const password = req.body.password;
+    if(!password){
+      throw new Error("Password is required!");
+    }
+    loggedUser.password = password;
+    await loggedUser.save();
+    res.json({
+      message: `${loggedUser.firstName}, Your password reset successfully!`,
+      data: loggedUser,
+    });
+  }catch(err){
+    res.status(400).send("Error: " + err.message);
+  }
+})
 
 module.exports = profileRouter;
