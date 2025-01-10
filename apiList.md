@@ -20,3 +20,5 @@ POST /requests/review/reject/:userId
 GET /user/connections
 GET /user/requests
 GET /user/feed
+
+Request's Status: Interested, rejected, accepted, ignored
