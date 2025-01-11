@@ -22,3 +22,7 @@ GET /user/requests
 GET /user/feed
 
 Request's Status: Interested, rejected, accepted, ignored
+
+Always think about worst case
+and corner cases 
+to save from attakers
