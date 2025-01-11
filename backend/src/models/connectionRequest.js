@@ -24,6 +24,8 @@ const connectionRequest = new mongoose.Schema(
   }
 );
 
+connectionRequest.index({ toUserId: 1, fromUserId: 1 });
+
 connectionRequest.pre("save", function (next) {
   const connectionRequest = this;
   // handle if the from userId and the toUserId is same
