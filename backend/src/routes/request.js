@@ -64,10 +64,10 @@ requestRouter.post(
 
       const allowedStatus = ["accepted", "rejected"];
       if (!allowedStatus.includes(status)) {
-        throw new Error("This status is not allowed!");
+        return res.status(400).json({message:"This status is not allowed!"});
       }
 
-      const connectionRequest = new ConnectionRequest({
+      const connectionRequest = new ConnectionRequest.findOne({
         _id: requestId,
         toUserId: loggedInUser.id,
         status: "interested",
