@@ -1,6 +1,7 @@
 const express = require("express");
 const { userAuth } = require("../middlewares/auth");
 const ConnectionRequest = require("../models/connectionRequest");
+const User = require("../models/user");
 
 const userRouter = express.Router();
 
@@ -37,10 +38,10 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
     }).populate("fromUserId toUserId", USER_DATA);
 
     const data = connections.map((row) => {
-        if(row.fromUserId._id.equals(loggedInUser._id)) {
-            return row.toUserId;
-        }
-        return row.fromUserId
+      if (row.fromUserId._id.equals(loggedInUser._id)) {
+        return row.toUserId;
+      }
+      return row.fromUserId;
     });
     res.json({
       message: "Connections fetched successfully!",
@@ -52,17 +53,36 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
 });
 
 userRouter.get("/feed", userAuth, async (req, res) => {
-  try{
+  try {
     const loggedInUser = req.user;
     // User can see all the users exept this users
     // 1. if user ignored -> not again show
     // 2. if user already exists -> not again show
     // 3. dont show user itself
     // 4. else show all the users
-    // 
+    const connectionRequest = await ConnectionRequest.find({
+      $or: [{ fromUserId: loggedInUser._id }, { toUserId: loggedInUser._id }],
+    }).select("fromUserId toUserId");
+
+    const hideUserFromFeed = new Set();
+    connectionRequest.forEach((req) => {
+      hideUserFromFeed.add(req.fromUserId._id);
+      hideUserFromFeed.add(req.toUserId._id);
+    });
+
+    const user = await User.find({
+      $and: [
+        { _id: { $nin: Array.from(hideUserFromFeed) } },
+        { _id: { $ne: loggedInUser._id } },
+      ],
+    }).select(USER_DATA);
+    res.json({
+      message: "Feed fetched successfully!",
+      data: user,
+    });
   } catch (err) {
     res.status(400).send("Error: " + err.message);
   }
-})
+});
 
 module.exports = userRouter;
