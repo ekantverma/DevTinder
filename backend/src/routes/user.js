@@ -31,7 +31,6 @@ userRouter.get("/user/requests/received", userAuth, async (req, res) => {
 userRouter.get("/user/connections", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
-    // Logic to retrieve connections goes here
     const connections = await ConnectionRequest.find({
       $or: [{ fromUserId: loggedInUser._id }, { toUserId: loggedInUser._id }],
       status: "accepted",
@@ -55,11 +54,16 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
 userRouter.get("/feed", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
+    const page = parseInt(req.query.page) || 0;
+    let limit = parseInt(req.query.limit) || 10;
+    limit = limit > 50 ? 50 : limit;
+
+    const skip = (page - 1) * limit;
     // User can see all the users exept this users
     // 1. if user ignored -> not again show
     // 2. if user already exists -> not again show
     // 3. dont show user itself
-    // 4. else show all the users
+    // 4. else show all the users -> (Logicals query operators in mongodb)
     const connectionRequest = await ConnectionRequest.find({
       $or: [{ fromUserId: loggedInUser._id }, { toUserId: loggedInUser._id }],
     }).select("fromUserId toUserId");
@@ -75,7 +79,11 @@ userRouter.get("/feed", userAuth, async (req, res) => {
         { _id: { $nin: Array.from(hideUserFromFeed) } },
         { _id: { $ne: loggedInUser._id } },
       ],
-    }).select(USER_DATA);
+    })
+      .select(USER_DATA)
+      .skip(skip)
+      .limit(limit);
+
     res.json({
       message: "Feed fetched successfully!",
       data: user,
