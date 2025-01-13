@@ -51,4 +51,18 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
   }
 });
 
+userRouter.get("/feed", userAuth, async (req, res) => {
+  try{
+    const loggedInUser = req.user;
+    // User can see all the users exept this users
+    // 1. if user ignored -> not again show
+    // 2. if user already exists -> not again show
+    // 3. dont show user itself
+    // 4. else show all the users
+    // 
+  } catch (err) {
+    res.status(400).send("Error: " + err.message);
+  }
+})
+
 module.exports = userRouter;
