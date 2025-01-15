@@ -14,7 +14,7 @@ const Navbar = () => {
             <div className="w-10 rounded-full">
               <img
                 alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                src="https://media.licdn.com/dms/image/v2/D5603AQFSx39Hgmx1XQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1727185193326?e=1742428800&v=beta&t=VkilHgp2MTYc4-3JQmO4c2igJ7HZXK3i5fnLqvHT4eY"
               />
             </div>
           </div>
