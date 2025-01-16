@@ -20,7 +20,7 @@ const Login = () => {
         withCredentials: true,
       });
       dispatch(addUser(res.data));
-      navigate("/");
+      return navigate("/");
     } catch (err) {
       console.error(err);
       alert("Failed to login!");
