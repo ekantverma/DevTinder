@@ -5,7 +5,7 @@ const userAuth = async (req, res, next) => {
   try {
     const { token } = req.cookies;
     if (!token) {
-      res.status(401).send("Please Login!")
+      return res.status(401).send("Please Login!")
     }
     const verified = jwt.verify(token, "Dev@Tinder$3000");
     const user = await User.findById(verified.id);
