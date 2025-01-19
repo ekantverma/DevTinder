@@ -12,21 +12,26 @@ const Feed = () => {
   const getFeed = async () => {
     if (feed) return;
     try {
-      const res = await axios.get(`${BASE_URL}/feed?limit=1&page=1`, {
+      const res = await axios.get(`${BASE_URL}/feed`, {
         withCredentials: true,
       });
-      dispatch(addFeed(res?.data?.data));
+      dispatch(addFeed(res?.data));
     } catch (err) {
       console.log(err);
     }
   };
+
   useEffect(() => {
     getFeed();
   }, []);
 
   return (
-    <div>
-      <h1>Feed Cards</h1>
+    // User feed page
+    <div className="">
+      <div>
+        <h1>Feed</h1>
+      </div>
+      
     </div>
   );
 };
