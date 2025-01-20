@@ -54,43 +54,48 @@ userRouter.get("/user/connections", userAuth, async (req, res) => {
 userRouter.get("/feed", userAuth, async (req, res) => {
   try {
     const loggedInUser = req.user;
-    const page = parseInt(req.query.page) || 0;
+
+    // Pagination setup
+    const page = Math.max(1, parseInt(req.query.page) || 1);
     let limit = parseInt(req.query.limit) || 10;
     limit = limit > 50 ? 50 : limit;
 
     const skip = (page - 1) * limit;
-    // User can see all the users exept this users
-    // 1. if user ignored -> not again show
-    // 2. if user already exists -> not again show
-    // 3. dont show user itself
-    // 4. else show all the users -> (Logicals query operators in mongodb)
+
+    // Fetch connection requests
     const connectionRequest = await ConnectionRequest.find({
       $or: [{ fromUserId: loggedInUser._id }, { toUserId: loggedInUser._id }],
-    }).select("fromUserId toUserId");
+    })
+      .select("fromUserId toUserId")
+      .lean();
 
+    // Create a set of users to hide from feed
     const hideUserFromFeed = new Set();
     connectionRequest.forEach((req) => {
-      hideUserFromFeed.add(req.fromUserId._id);
-      hideUserFromFeed.add(req.toUserId._id);
+      hideUserFromFeed.add(req.fromUserId.toString());
+      hideUserFromFeed.add(req.toUserId.toString());
     });
 
-    const user = await User.find({
+    // Fetch users for the feed
+    const users = await User.find({
       $and: [
-        { _id: { $nin: Array.from(hideUserFromFeed) } },
-        { _id: { $ne: loggedInUser._id } },
+        { _id: { $nin: Array.from(hideUserFromFeed) } }, // Exclude hidden users
+        { _id: { $ne: loggedInUser._id } },             // Exclude logged-in user
       ],
     })
       .select(USER_DATA)
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .lean();
 
     res.json({
       message: "Feed fetched successfully!",
-      data: user,
+      data: users,
     });
   } catch (err) {
-    res.status(400).send("Error: " + err.message);
+    res.status(400).json({ message: "An error occurred", error: err.message });
   }
 });
+
 
 module.exports = userRouter;

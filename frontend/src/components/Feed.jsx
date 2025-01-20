@@ -1,37 +1,42 @@
 import React, { useEffect } from "react";
-import axios from "axios";
-import { BASE_URL } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import addFeed from "../utils/feedSlice";
+import axios from "axios";
+import { setFeed } from "../utils/feedSlice";
+import { BASE_URL } from "../utils/constants";
+import FeedCard from "./FeedCard";
 
 const Feed = () => {
-  const feed = useSelector((store) => store.feed);
-  console.log(feed);
+  const feed = useSelector((store) => store.feed); // Assuming feed is an array
   const dispatch = useDispatch();
 
   const getFeed = async () => {
-    if (feed) return;
+    if (feed && feed.length > 0) return; // Prevent duplicate fetch if feed exists
+
     try {
       const res = await axios.get(`${BASE_URL}/feed`, {
         withCredentials: true,
+        params: {
+          page: 1,
+          limit: 10,
+        },
       });
-      dispatch(addFeed(res?.data));
+      dispatch(setFeed(res?.data?.data));
     } catch (err) {
-      console.log(err);
+      console.error("Failed to fetch feed:", err.message);
     }
   };
 
   useEffect(() => {
     getFeed();
-  }, []);
+  }, [dispatch]);
 
   return (
-    // User feed page
-    <div className="">
-      <div>
-        <h1>Feed</h1>
-      </div>
-      
+    <div>
+      {feed && feed.length > 0 ? (
+        feed.map((item, index) => <FeedCard key={index} feed={item} />)
+      ) : (
+        <p>Loading feed...</p>
+      )}
     </div>
   );
 };
