@@ -3,14 +3,13 @@ import { Link, redirect, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import {removeUser } from "../utils/userSlice";
+import { removeUser } from "../utils/userSlice";
 
 const Navbar = () => {
-
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const handleLogout = async () => {
     try {
       await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
@@ -19,17 +18,19 @@ const Navbar = () => {
     } catch (err) {
       console.error("Error logging out:", err);
     }
-  }
+  };
 
-    return (
+  return (
     <div className="navbar bg-base-300">
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">👨‍💻 DevTinder</Link>
+        <Link to="/" className="btn btn-ghost text-xl">
+          👨‍💻 DevTinder
+        </Link>
       </div>
 
       {user?.firstName && (
         <div className="flex-none gap-2">
-        <div className="form-control">Welcome, {user.firstName}</div>
+          <div className="form-control">Welcome, {user.firstName}</div>
           <div className="dropdown dropdown-end mx-5">
             <div
               tabIndex={0}
@@ -39,7 +40,7 @@ const Navbar = () => {
               <div className="w-10 rounded-full">
                 <img
                   alt="Tailwind CSS Navbar component"
-                  src="https://media.licdn.com/dms/image/v2/D5603AQFSx39Hgmx1XQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1727185193326?e=1742428800&v=beta&t=VkilHgp2MTYc4-3JQmO4c2igJ7HZXK3i5fnLqvHT4eY"
+                  src={user.photoUrl}
                 />
               </div>
             </div>
@@ -54,7 +55,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <a>Settings</a>
+                <Link to="/connections">Connections</Link>
               </li>
               <li>
                 <a onClick={handleLogout}>Logout</a>
