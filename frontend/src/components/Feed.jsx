@@ -6,11 +6,11 @@ import { BASE_URL } from "../utils/constants";
 import FeedCard from "./FeedCard";
 
 const Feed = () => {
-  const feed = useSelector((store) => store.feed); // Assuming feed is an array
+  const feed = useSelector((store) => store.feed); 
   const dispatch = useDispatch();
 
   const getFeed = async () => {
-    if (feed && feed.length > 0) return; // Prevent duplicate fetch if feed exists
+    if (feed && feed.length > 0) return;
 
     try {
       const res = await axios.get(`${BASE_URL}/feed`, {
