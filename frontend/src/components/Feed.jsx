@@ -30,12 +30,16 @@ const Feed = () => {
     getFeed();
   }, [dispatch]);
 
+  if (!feed || feed.length === 0) {
+    return <h1 className="text-center my-10 text-xl font-semibold">No feed found!</h1>;
+  }
+
   return (
     <div>
       {feed && feed.length > 0 ? (
         feed.map((item, index) => <FeedCard key={index} feed={item} />)
       ) : (
-        <p>Loading feed...</p>
+        <p className="text-center my-10 text-xl font-semibold">Loading feed...</p>
       )}
     </div>
   );

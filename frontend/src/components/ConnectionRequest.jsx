@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { addRequests } from "../utils/requestsSlice";
+import { addRequests, removeRequests } from "../utils/requestsSlice";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
@@ -8,6 +8,21 @@ import { useSelector } from "react-redux";
 const ConnectionRequest = () => {
   const requests = useSelector((store) => store.requests);
   const dispatch = useDispatch();
+
+  const reviewRequest = async (status, _id) => {
+    try {
+      const res = axios.post(
+        BASE_URL + "/request/review/" + status + "/" + _id,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(removeRequests(_id));
+    } catch (err) {
+      console.log("Error reviewing request:", err);
+    }
+  };
 
   const Requests = async () => {
     try {
@@ -54,13 +69,18 @@ const ConnectionRequest = () => {
             {/* User Info */}
             <div className="flex items-center">
               <img
-                src={request.fromUserId.photoUrl || "http://placekitten.com/200/200"}
+                src={
+                  request.fromUserId.photoUrl ||
+                  "http://placekitten.com/200/200"
+                }
                 alt="User avatar"
                 className="w-16 h-16 rounded-full mr-4"
               />
               <div>
                 <h2 className="text-lg font-semibold">
-                  {request.fromUserId.firstName + " " + request.fromUserId.lastName}
+                  {request.fromUserId.firstName +
+                    " " +
+                    request.fromUserId.lastName}
                 </h2>
                 <p className="text-gray-300">{request.email}</p>
               </div>
@@ -68,7 +88,8 @@ const ConnectionRequest = () => {
 
             {/* About Section */}
             <div className="text-center text-sm text-gray-200">
-              {request.fromUserId.about || "No additional information provided."}
+              {request.fromUserId.about ||
+                "No additional information provided."}
             </div>
 
             {/* Sent Time */}
@@ -84,11 +105,13 @@ const ConnectionRequest = () => {
             <div className="flex space-x-4">
               <button
                 className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow"
+                onClick={() => reviewRequest("accepted", request._id)}
               >
                 ✅ Accept
               </button>
               <button
                 className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg shadow"
+                onClick={() => reviewRequest("rejected", request._id)}
               >
                 ❌ Reject
               </button>
