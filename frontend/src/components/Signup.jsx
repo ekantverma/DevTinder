@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
-
+import { addUser } from "../utils/userSlice";
 
 const Signup = () => {
   const [firstName, setFirstName] = useState("Dhoni");
@@ -15,15 +15,17 @@ const Signup = () => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
 
-  const handleSignup = async () => {
+  const handleSignup = async (e) => {
+    e.preventDefault(); 
+
     try {
       const res = await axios.post(
         BASE_URL + "/signup",
         { firstName, lastName, email, password },
         { withCredentials: true }
       );
-      dispatch(addUser(res.data.data));
-      navigate("/profile");
+      dispatch(addUser(res.data.data));  
+      navigate("/profile"); 
     } catch (err) {
       setError(err.response?.data?.message || "An error occurred. Please try again.");
     }
@@ -32,16 +34,11 @@ const Signup = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black p-6">
       <div className="p-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-lg w-full max-w-md">
-        <h1 className="text-2xl font-bold text-white text-center mb-6">
-          Sign Up
-        </h1>
-        <form className="space-y-4">
+        <h1 className="text-2xl font-bold text-white text-center mb-6">Sign Up</h1>
+        <form className="space-y-4" onSubmit={handleSignup}>
           {/* First Name */}
           <div>
-            <label
-              htmlFor="firstName"
-              className="block text-sm font-medium text-gray-300"
-            >
+            <label htmlFor="firstName" className="block text-sm font-medium text-gray-300">
               First Name
             </label>
             <input
@@ -57,10 +54,7 @@ const Signup = () => {
 
           {/* Last Name */}
           <div>
-            <label
-              htmlFor="lastName"
-              className="block text-sm font-medium text-gray-300"
-            >
+            <label htmlFor="lastName" className="block text-sm font-medium text-gray-300">
               Last Name
             </label>
             <input
@@ -76,10 +70,7 @@ const Signup = () => {
 
           {/* Email */}
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-300"
-            >
+            <label htmlFor="email" className="block text-sm font-medium text-gray-300">
               Email
             </label>
             <input
@@ -95,10 +86,7 @@ const Signup = () => {
 
           {/* Password */}
           <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-300"
-            >
+            <label htmlFor="password" className="block text-sm font-medium text-gray-300">
               Password
             </label>
             <input
@@ -117,14 +105,11 @@ const Signup = () => {
             <button
               type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition-colors duration-200 shadow-md"
-            onClick={handleSignup}
             >
               Sign Up
             </button>
           </div>
         </form>
-
-        {/* Footer */}
         <p className="text-sm text-center text-gray-400 mt-4">
           Already have an account?{" "}
           <a href="/login" className="text-blue-400 hover:underline">

@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./Navbar";
-import { Outlet, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
-import { useEffect } from "react";
-import axios from "axios";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import { addUser } from "../utils/userSlice";
 import { BASE_URL } from "../utils/constants";
 
 const Body = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const userData = useSelector((store) => store.user);
 
+  const isPublicRoute = ["/login", "/signup"].includes(location.pathname);
+
   const fetchUser = async () => {
-    if (!userData) return;
     try {
       const res = await axios.get(`${BASE_URL}/profile/view`, {
         withCredentials: true,
@@ -22,7 +23,7 @@ const Body = () => {
       dispatch(addUser(res.data));
     } catch (err) {
       if (err.response && err.response.status === 401) {
-        navigate("/login");
+        if (!isPublicRoute) navigate("/login"); // Redirect if accessing protected routes
       } else {
         console.error("Error fetching user data:", err);
       }
@@ -30,8 +31,10 @@ const Body = () => {
   };
 
   useEffect(() => {
-    fetchUser(); 
-  }, []);
+    if (!userData && !isPublicRoute) {
+      fetchUser();
+    }
+  }, [location]);
 
   return (
     <div>
