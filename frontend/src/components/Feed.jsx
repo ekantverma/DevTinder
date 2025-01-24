@@ -31,7 +31,7 @@ const Feed = () => {
   }, [dispatch]);
 
   if (!feed || feed.length === 0) {
-    return <h1 className="text-center my-10 text-xl font-semibold">No feed found!</h1>;
+    return <h1 className="text-center my-10 text-xl font-semibold">No Users found!</h1>;
   }
 
   return (
