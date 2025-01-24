@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
 
 
 const Signup = () => {
@@ -12,6 +13,7 @@ const Signup = () => {
 
   const navigate = useNavigate();
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
 
   const handleSignup = async () => {
     try {
@@ -20,7 +22,8 @@ const Signup = () => {
         { firstName, lastName, email, password },
         { withCredentials: true }
       );
-      navigate("/");
+      dispatch(addUser(res.data.data));
+      navigate("/profile");
     } catch (err) {
       setError(err.response?.data?.message || "An error occurred. Please try again.");
     }
