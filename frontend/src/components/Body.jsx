@@ -13,17 +13,18 @@ const Body = () => {
   const location = useLocation();
   const userData = useSelector((store) => store.user);
 
-  const isPublicRoute = ["/login", "/signup"].includes(location.pathname);
+  const isPublicRoute = ["/login", "/signup", "/"].includes(location.pathname);
 
   const fetchUser = async () => {
     try {
       const res = await axios.get(`${BASE_URL}/profile/view`, {
         withCredentials: true,
       });
-      dispatch(addUser(res.data));
+      dispatch(addUser(res.data)); // Add user data to Redux store
     } catch (err) {
-      if (err.response && err.response.status === 401) {
-        if (!isPublicRoute) navigate("/login"); // Redirect if accessing protected routes
+      // Handle unauthorized access (e.g., 401)
+      if (err.response && err.response.status === 401 && !isPublicRoute) {
+        navigate("/login"); // Redirect to login if the user is unauthorized
       } else {
         console.error("Error fetching user data:", err);
       }
@@ -31,10 +32,11 @@ const Body = () => {
   };
 
   useEffect(() => {
+    // Check authentication only for protected routes
     if (!userData && !isPublicRoute) {
       fetchUser();
     }
-  }, [location]);
+  }, [location, userData, isPublicRoute]);
 
   return (
     <div>
