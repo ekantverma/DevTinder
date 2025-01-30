@@ -6,10 +6,10 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
 const Signup = () => {
-  const [firstName, setFirstName] = useState("Dhoni");
-  const [lastName, setLastName] = useState("Dhoni");
-  const [email, setEmail] = useState("dhoni@gmail.com");
-  const [password, setPassword] = useState("Dhoni@123");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
   const [error, setError] = useState("");

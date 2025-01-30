@@ -145,7 +145,7 @@ const EditProfile = ({ user }) => {
 
         {/* Preview Card */}
         <div className="w-full lg:w-1/2">
-          <h2 className="text-xl font-bold text-center mb-5">Profile Preview</h2>
+          <h2 className="text-xl font-bold text-center mb-5">Your Profile</h2>
           <FeedCard
             feed={{ firstName, lastName, photoUrl, age, gender, about }}
           />
