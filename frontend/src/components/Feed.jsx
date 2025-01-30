@@ -8,9 +8,9 @@ import FeedCard from "./FeedCard";
 const Feed = () => {
   const feed = useSelector((store) => store.feed);
   const dispatch = useDispatch();
-  const [currentIndex, setCurrentIndex] = useState(0); // Current visible card
-  const [isAnimating, setIsAnimating] = useState(false); // Control animation state
-  const [animationClass, setAnimationClass] = useState(""); // Animation class
+  const [currentIndex, setCurrentIndex] = useState(0); 
+  const [isAnimating, setIsAnimating] = useState(false); 
+  const [animationClass, setAnimationClass] = useState(""); 
 
   const getFeed = async () => {
     if (feed && feed.length > 0) return;
@@ -34,18 +34,16 @@ const Feed = () => {
   }, [dispatch]);
 
   const handleAction = (direction) => {
-    if (isAnimating) return; // Prevent actions during an ongoing animation
-    setIsAnimating(true); // Block further actions
+    if (isAnimating) return;
+    setIsAnimating(true); 
 
-    // Add the appropriate animation class
     setAnimationClass(direction === "left" ? "animate-move-left" : "animate-move-right");
 
-    // Wait for the animation to finish before updating the index
     setTimeout(() => {
-      setAnimationClass(""); // Reset the animation class
-      setCurrentIndex((prevIndex) => prevIndex + 1); // Move to the next card
-      setIsAnimating(false); // Allow further actions
-    }, 300); // Match the animation duration
+      setAnimationClass(""); 
+      setCurrentIndex((prevIndex) => prevIndex + 1); 
+      setIsAnimating(false); 
+    }, 300); 
   };
 
   if (!feed || feed.length === 0 || currentIndex >= feed.length) {
