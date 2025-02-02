@@ -16,11 +16,8 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Body />}>
-            {/* Public Routes */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-
-            {/* Protected Routes */}
             <Route path="/" element={<Feed />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/connections" element={<Connections />} />
