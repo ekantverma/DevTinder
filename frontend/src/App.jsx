@@ -9,6 +9,7 @@ import Connections from "./components/Connections.jsx";
 import ConnectionRequest from "./components/ConnectionRequest.jsx";
 import { Provider } from "react-redux";
 import appStore from "./utils/appStore.js";
+import Prices from "./components/Prices.jsx";
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/connections" element={<Connections />} />
             <Route path="/requests" element={<ConnectionRequest />} />
+            <Route path="/premium" element={<Prices />} />
           </Route>
         </Routes>
       </BrowserRouter>
