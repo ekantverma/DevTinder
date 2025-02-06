@@ -12,9 +12,12 @@ const cors = require("cors");
 require('dotenv').config();
 
 app.use(cors({
-  origin: ["https://dev-tinder-neon.vercel.app/"],
-  credentials: true,
+  origin: "https://dev-tinder-neon.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 }));
+
 app.use(express.json());
 app.use(cookies());
 
