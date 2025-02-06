@@ -25,7 +25,7 @@ const Login = () => {
       setError(err?.response?.data || "Something went wrong");
     }
   };
-
+  
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black p-6">
       <div className="p-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-lg w-full max-w-sm">
