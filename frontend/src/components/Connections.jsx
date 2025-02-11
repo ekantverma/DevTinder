@@ -3,6 +3,7 @@ import { BASE_URL } from "../utils/constants";
 import axios from "axios";
 import { setConnections } from "../utils/connectionsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Connections = () => {
   const connections = useSelector((store) => store.connections);
@@ -48,6 +49,7 @@ const Connections = () => {
             <h2 className="font-semibold text-xl">{`${connection.firstName} ${connection.lastName}`}</h2>
             <p className="text-gray-300 text-m">{connection.gender}, {connection.age} years old</p>
             <p className="text-gray-700 mt-2">{connection.about || "No about info available."}</p>
+            <Link to={"/chat/" + connection._id}><button className="btn btn-primary">Chat</button></Link>
           </div>
         ))}
       </div>
