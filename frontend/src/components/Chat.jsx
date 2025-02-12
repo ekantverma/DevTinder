@@ -13,6 +13,11 @@ const Chat = () => {
     }
   };
 
+  useEffect(() => {
+    const socket = createSocketConnection();
+    socket.emit('joinChat', {userId, toUserId});
+  }, []);
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       <div className="w-full max-w-2xl bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">

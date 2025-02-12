@@ -1,20 +1,34 @@
-import { useSelector } from "react-redux";
-import { Link, redirect, useNavigate } from "react-router-dom";
-import { BASE_URL } from "../utils/constants";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { removeUser } from "../utils/userSlice";
+import { BASE_URL } from "../utils/constants";
+import { addUser, removeUser } from "../utils/userSlice";
 
 const Navbar = () => {
-  const user = useSelector((store) => store.user);
+  const user = useSelector((store) => store.user) || {}; // Default value to avoid errors
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      dispatch(addUser(JSON.parse(storedUser)));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (user && Object.keys(user).length > 0) {
+      localStorage.setItem("user", JSON.stringify(user));
+    }
+  }, [user]);
 
   const handleLogout = async () => {
     try {
       await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
       dispatch(removeUser());
-      return navigate("/login");
+      localStorage.removeItem("user");
+      navigate("/login");
     } catch (err) {
       console.error("Error logging out:", err);
     }
@@ -23,49 +37,24 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-300">
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">
-          👨‍💻 DevTinder
-        </Link>
+        <Link to="/" className="btn btn-ghost text-xl">👨‍💻 DevTinder</Link>
       </div>
 
       {user?.firstName && (
         <div className="flex-none gap-2">
-          <div className="form-control">Welcome, {user.firstName}</div>
+          <div className="form-control text-white">Welcome, {user.firstName}</div>
           <div className="dropdown dropdown-end mx-5">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
+            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src={user.photoUrl}
-                />
+                <img alt="User Avatar" src={user.photoUrl || "/default-avatar.png"} />
               </div>
             </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <Link to="/profile" className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </Link>
-              </li>
-              <li>
-                <Link to="requests">Requests</Link>
-              </li>
-              <li>
-                <Link to="/connections">Connections</Link>
-              </li>
-              <li>
-                <Link to="/premium">Premium</Link>
-              </li>
-              <li>
-                <a onClick={handleLogout}>Logout</a>
-              </li>
+            <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+              <li><Link to="/profile">Profile</Link></li>
+              <li><Link to="/requests">Requests</Link></li>
+              <li><Link to="/connections">Connections</Link></li>
+              <li><Link to="/premium">Premium</Link></li>
+              <li><button onClick={handleLogout}>Logout</button></li>
             </ul>
           </div>
         </div>
