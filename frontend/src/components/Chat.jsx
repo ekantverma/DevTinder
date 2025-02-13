@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import { useEffect } from 'react';
+import createSocketConnection from "../utils/socket";
+
 
 const Chat = () => {
   const { toUserId } = useParams();
   const [messages, setMessages] = useState([{ msg: 'Hello', sender: 'me' }]);
   const [input, setInput] = useState('');
+  const user = useSelector((store) => store.user);
+  const userId = user._id;
 
   const sendMessage = () => {
     if (input.trim() !== '') {
