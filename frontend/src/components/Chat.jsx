@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import createSocketConnection from "../utils/socket";
 import axios from "axios";
 import { BASE_URL } from "../utils/constants";
@@ -19,13 +18,6 @@ const Chat = () => {
     socket.emit("sendMessage", { firstName, userId, toUserId, text: input });
     setInput("");
   };
-
-  // const fetchChatMessages = async () => {
-  //   const chat = await axios.get(BASE_URL + "/chat/" + toUserId,{
-  //     withcredentials: true,
-  //   });
-  //   console.log(chat.data.messages);
-  // };
 
   const fetchChatMessages = async () => {
     try {
@@ -71,10 +63,10 @@ const Chat = () => {
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`chat ${message.senderId.firstName === user.firstName ? "chat-end" : "chat-start"}`}
+              className={`chat ${message.senderId && message.senderId.firstName === user.firstName ? "chat-end" : "chat-start"}`}
             >
               <div className="chat-header">
-                <span className="chat-name">{message.senderId.firstName + " " + message.senderId.lastName} </span>
+                <span className="chat-name">{message.senderId ? `${message.senderId.firstName} ${message.senderId.lastName}` : "Unknown"}</span>
                 <time className="text-xs opacity-50">Just now</time>
               </div>
               <div className="chat-bubble bg-blue-500 text-white p-2 rounded-lg max-w-xs break-words">
