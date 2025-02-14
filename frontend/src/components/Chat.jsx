@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import createSocketConnection from "../utils/socket";
+import axios from "axios";
+import { BASE_URL } from "../utils/constants";
 
 const Chat = () => {
   const { toUserId } = useParams();
@@ -17,6 +19,32 @@ const Chat = () => {
     socket.emit("sendMessage", { firstName, userId, toUserId, text: input });
     setInput("");
   };
+
+  // const fetchChatMessages = async () => {
+  //   const chat = await axios.get(BASE_URL + "/chat/" + toUserId,{
+  //     withcredentials: true,
+  //   });
+  //   console.log(chat.data.messages);
+  // };
+
+  const fetchChatMessages = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const chat = await axios.get(`${BASE_URL}/chat/${toUserId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      });
+      setMessages(chat.data.messages);
+    } catch (err) {
+      console.error("Error fetching chat messages:", err.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchChatMessages();
+  }, [toUserId]);
 
   useEffect(() => {
     if (!userId) return;
