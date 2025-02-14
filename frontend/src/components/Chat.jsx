@@ -71,12 +71,10 @@ const Chat = () => {
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`chat ${
-                message.sender === "me" ? "chat-end" : "chat-start"
-              }`}
+              className={`chat ${message.senderId.firstName === user.firstName ? "chat-end" : "chat-start"}`}
             >
               <div className="chat-header">
-                <span className="chat-name">{message.firstName} </span>
+                <span className="chat-name">{message.senderId.firstName + " " + message.senderId.lastName} </span>
                 <time className="text-xs opacity-50">Just now</time>
               </div>
               <div className="chat-bubble bg-blue-500 text-white p-2 rounded-lg max-w-xs break-words">
