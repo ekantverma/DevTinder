@@ -97,5 +97,16 @@ userRouter.get("/feed", userAuth, async (req, res) => {
   }
 });
 
+userRouter.get("/userProfile/:userId", async (req, res) => {
+  try{
+    const userId = req.params.userId;
+    const user = await User.findById(userId).select(USER_DATA);
+    res.json(user);
+  }catch (err){
+    res.status(404).json({ message: "User not found!", error: err.message });
+  }
+});
+
+
 
 module.exports = userRouter;

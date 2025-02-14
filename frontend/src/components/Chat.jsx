@@ -12,6 +12,7 @@ const Chat = () => {
   const user = useSelector((store) => store.user);
   const userId = user._id;
   const firstName = user.firstName;
+  const [targetUser, setTargetUser] = useState("");
 
   const sendMessage = () => {
     const socket = createSocketConnection();
@@ -34,8 +35,14 @@ const Chat = () => {
     }
   };
 
+  const fetchChatUser = async () => {
+    const targetUser = await axios.get(`${BASE_URL}/userProfile/${toUserId}`);
+    setTargetUser(targetUser.data);
+  };
+
   useEffect(() => {
     fetchChatMessages();
+    fetchChatUser();
   }, [toUserId]);
 
   useEffect(() => {
@@ -56,18 +63,37 @@ const Chat = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       <div className="w-full max-w-2xl bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-        <h1 className="text-2xl font-bold mb-4 text-black dark:text-white">
-          Chats
-        </h1>
+        <div className="flex flex-row mb-4">
+          <img
+            className="w-8 h-8 rounded-full"
+            src={targetUser.photoUrl}
+            alt="User Avatar"
+          />
+          <span className="flex flex-col ml-5">
+            <h1 className="text-xl font-bold text-black dark:text-white">
+              {targetUser.firstName} {targetUser.lastName}
+            </h1>
+            <h6 className="text-gray-400 text-sm">{targetUser ? "Last seen at 5 mins ago" : ""}</h6>
+          </span>
+        </div>
         <div className="h-96 overflow-y-auto mb-4 border border-gray-300 dark:border-gray-700 p-2 rounded-lg">
           {messages.map((message, index) => (
             <div
               key={index}
-              className={`chat ${message.senderId && message.senderId.firstName === user.firstName ? "chat-end" : "chat-start"}`}
+              className={`chat ${
+                message.senderId &&
+                message.senderId.firstName === user.firstName
+                  ? "chat-end"
+                  : "chat-start"
+              }`}
             >
               <div className="chat-header">
-                <span className="chat-name">{message.senderId ? `${message.senderId.firstName} ${message.senderId.lastName}` : "Unknown"}</span>
-                <time className="text-xs opacity-50">Just now</time>
+                <span className="chat-name">
+                  {message.senderId
+                    ? `${message.senderId.firstName} ${message.senderId.lastName}`
+                    : "Unknown"}
+                </span>
+                <time className="text-xs opacity-50"> Just now</time>
               </div>
               <div className="chat-bubble bg-blue-500 text-white p-2 rounded-lg max-w-xs break-words">
                 {message.text}

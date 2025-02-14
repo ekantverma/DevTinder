@@ -29,6 +29,11 @@ const initializeSocket = (server) => {
       try {
         const roomId = getSecretRoomId(userId, toUserId);
         console.log(firstName + " Sent a message : " + text);
+
+        // Todo - if the user id and touserId are the freinds means status is accepted then u can send msg so verify it.
+        // else return error message.
+
+
         let chat = await Chat.findOne({
           participants: { $all: [userId, toUserId] },
         });
