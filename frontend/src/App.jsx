@@ -11,6 +11,7 @@ import { Provider } from "react-redux";
 import appStore from "./utils/appStore.js";
 import Prices from "./components/Prices.jsx";
 import Chat from "./components/Chat.jsx";
+import MainPage from "./components/MainPage.jsx";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Body />}>
+            <Route path="/" element={<MainPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/" element={<Feed />} />
