@@ -13,7 +13,7 @@ const EditProfile = ({ user }) => {
   const [lastName, setLastName] = useState(user?.lastName || "");
   const [photoUrl, setPhotoUrl] = useState(user?.photoUrl || "");
   const [age, setAge] = useState(user?.age || "");
-  const [gender, setGender] = useState(user?.gender || "Other");
+  const [gender, setGender] = useState(user?.gender || "others");
   const [about, setAbout] = useState(user?.about || "");
   const [showAlert, setShowAlert] = useState(false);
   const [error, setError] = useState(null);
@@ -27,7 +27,7 @@ const EditProfile = ({ user }) => {
       setLastName(parsedUser.lastName || "");
       setPhotoUrl(parsedUser.photoUrl || "");
       setAge(parsedUser.age || "");
-      setGender(parsedUser.gender || "Other");
+      setGender(parsedUser.gender || "other");
       setAbout(parsedUser.about || "");
     }
   }, []);
@@ -59,7 +59,7 @@ const EditProfile = ({ user }) => {
     <div className="flex flex-col items-center my-10 relative">
       {/* ✅ Alert Notification */}
       {showAlert && (
-        <div className="absolute top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-md animate-bounce">
+        <div className="absolute top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-md animate-bounce z-10">
           Profile updated successfully!
         </div>
       )}
@@ -137,9 +137,9 @@ const EditProfile = ({ user }) => {
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
                 >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="others">Others</option>
                 </select>
               </label>
             </div>
