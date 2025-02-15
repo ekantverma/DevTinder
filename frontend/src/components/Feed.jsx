@@ -47,7 +47,7 @@ const Feed = () => {
   };
 
   if (!feed || feed.length === 0 || currentIndex >= feed.length) {
-    return <h1 className="text-center my-10 text-xl font-semibold text-gray-600">No more developers found!</h1>;
+    return <h1 className="text-center my-10 text-xl font-semibold text-gray-600 h-screen">No more developers found OR Login Again</h1>;
   }
 
   return (
