@@ -50,14 +50,14 @@ const Navbar = () => {
 
   return (
     <div
-      className={`navbar rounded-md transition-all duration-300 fixed z-50 w-full${
+      className={`navbar rounded-md transition-all duration-300 fixed z-50 w-full items-center${
         isScrolled
           ? "w-[95%] mt-2 shadow-lg backdrop-blur-md rounded-2xl mx-8"
           : "w-full bg-base-300"
       }`}
     >
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">
+        <Link to="/feed" className="btn btn-ghost text-xl">
           👨‍💻 DevTinder
         </Link>
       </div>
