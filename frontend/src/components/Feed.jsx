@@ -47,7 +47,11 @@ const Feed = () => {
   };
 
   if (!feed || feed.length === 0 || currentIndex >= feed.length) {
-    return <h1 className="text-center my-10 text-xl font-semibold text-gray-600 h-screen">No more developers found OR Login Again</h1>;
+    return (
+      <h1 className="text-center my-0 pt-20 text-xl font-semibold text-gray-600 h-screen flex items-center justify-center">
+        No more developers found OR Login Again
+      </h1>
+    );
   }
 
   return (

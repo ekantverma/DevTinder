@@ -54,7 +54,7 @@ const Navbar = () => {
         isScrolled
           ? "w-[95%] left-8 mt-2 shadow-lg backdrop-blur-md rounded-2xl"
           : "w-full bg-base-300"
-      }`}
+      } my-0`}
     >
       <div className="flex-1">
         <Link to="/feed" className="btn btn-ghost text-xl">
