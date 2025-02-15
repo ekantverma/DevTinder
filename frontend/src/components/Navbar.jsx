@@ -50,9 +50,9 @@ const Navbar = () => {
 
   return (
     <div
-      className={`navbar rounded-md transition-all duration-300 fixed z-50 w-full items-center${
+      className={`navbar rounded-md transition-all duration-300 fixed z-50 ${
         isScrolled
-          ? "w-[95%] mt-2 shadow-lg backdrop-blur-md rounded-2xl mx-8"
+          ? "w-[95%] left-8 mt-2 shadow-lg backdrop-blur-md rounded-2xl"
           : "w-full bg-base-300"
       }`}
     >
@@ -61,7 +61,6 @@ const Navbar = () => {
           👨‍💻 DevTinder
         </Link>
       </div>
-
       {user?.firstName && (
         <div className="flex-none gap-2">
           <div className="form-control text-white">
