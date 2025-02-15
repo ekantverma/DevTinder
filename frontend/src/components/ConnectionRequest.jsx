@@ -49,14 +49,14 @@ const ConnectionRequest = () => {
 
   if (requests.length === 0) {
     return (
-      <h1 className="text-center my-10 text-xl font-semibold">
+      <h1 className="text-center my-10 text-xl font-semibold  my-0 pt-20 flex items-center justify-center h-screen">
         No requests found!
       </h1>
     );
   }
 
   return (
-    <div className="flex flex-col items-center p-6 bg-gradient-to-br from-base-100 via-base-200 to-base-300 min-h-screen">
+    <div className="flex flex-col items-center p-6 bg-gradient-to-br from-base-100 via-base-200 to-base-300 min-h-screen my-0 pt-20">
       <h1 className="text-center text-2xl font-bold text-white mb-6">
         Connection Requests
       </h1>

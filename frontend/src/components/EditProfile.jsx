@@ -56,7 +56,7 @@ const EditProfile = ({ user }) => {
   };
 
   return (
-    <div className="flex flex-col items-center my-10 relative">
+    <div className="flex flex-col items-center my-10 relative my-0 pt-20">
       {/* ✅ Alert Notification */}
       {showAlert && (
         <div className="absolute top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-md animate-bounce z-10">

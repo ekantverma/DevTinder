@@ -28,7 +28,7 @@ const Login = () => {
   };
   
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black p-6">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black p-6 my-0 pt-20">
       <div className="p-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl shadow-lg w-full max-w-sm">
         <h2 className="text-2xl font-bold text-white text-center mb-6">Login</h2>
         <form className="space-y-4">
