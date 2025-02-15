@@ -21,7 +21,7 @@ const Login = () => {
       );
       dispatch(addUser(res.data));
       localStorage.setItem("user", JSON.stringify(res.data));
-      navigate("/");
+      navigate("/feed");
     } catch (err) {
       setError(err?.response?.data || "Something went wrong");
     }

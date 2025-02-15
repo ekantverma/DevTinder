@@ -60,7 +60,7 @@ const MainPage = () => {
           </div>
         </section>
 
-        <section className="bg-gradient-to-r from-indigo-600 to-blue-600 dark:from-indigo-900 dark:to-blue-900 text-white py-16">
+        <section className="bg-black text-white py-16">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold mb-6 drop-shadow-md">
               Ready to Level Up Your Network?
