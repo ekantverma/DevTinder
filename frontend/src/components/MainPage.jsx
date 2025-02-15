@@ -12,16 +12,20 @@ const MainPage = () => {
         >
           <div className="container mx-auto px-4 text-center p-4">
             <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">
-              Welcome to Dev Tinder
+              Welcome to Dev Tinder 👨‍💻
             </h1>
             <p className="text-xl md:text-2xl mb-8 drop-shadow-lg">
               Connecting developers, one swipe at a time.
             </p>
-            <Link
-              to="/login"
-              className="bg-white text-blue-600 font-semibold px-6 py-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition shadow-lg"
-            >
-              Get Started
+            <Link to="/login" className="inline-block">
+              <div
+                className="flex rounded-full mx-auto bg-gradient-to-tr from-red-400 via-orange-400 to-rose-400 p-px shadow-lg"
+                style={{ maxWidth: "240px" }}
+              >
+                <span className="flex-1 font-bold text-xl bg-white text-blue-600 font-semibold px-6 py-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+                  Get Started
+                </span>
+              </div>
             </Link>
           </div>
         </section>
@@ -37,7 +41,8 @@ const MainPage = () => {
                   Connect with Like-minded Developers
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Discover and connect with developers who share your passion, skills, and interests.
+                  Discover and connect with developers who share your passion,
+                  skills, and interests.
                 </p>
               </div>
               <div className="bg-white dark:bg-gray-700 shadow-xl rounded-xl p-8 text-center transform transition hover:-translate-y-2 hover:shadow-2xl">
@@ -45,7 +50,8 @@ const MainPage = () => {
                   Expand Your Network
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Build lasting relationships, collaborate on projects, and grow your career.
+                  Build lasting relationships, collaborate on projects, and grow
+                  your career.
                 </p>
               </div>
               <div className="bg-white dark:bg-gray-700 shadow-xl rounded-xl p-8 text-center transform transition hover:-translate-y-2 hover:shadow-2xl">
@@ -53,7 +59,8 @@ const MainPage = () => {
                   Smart Matching Algorithm
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300">
-                  Our advanced algorithm helps you find the best matches based on your unique profile.
+                  Our advanced algorithm helps you find the best matches based
+                  on your unique profile.
                 </p>
               </div>
             </div>
@@ -66,7 +73,8 @@ const MainPage = () => {
               Ready to Level Up Your Network?
             </h2>
             <p className="mb-8 drop-shadow-md">
-              Join Dev Tinder today and start connecting with amazing developers.
+              Join Dev Tinder today and start connecting with amazing
+              developers.
             </p>
             <Link
               to="/signup"
@@ -82,4 +90,3 @@ const MainPage = () => {
 };
 
 export default MainPage;
-
