@@ -84,7 +84,7 @@ const MainPage = () => {
             </Link>
           </div>
         </section>
-        <div className="max-w-xl mx-auto space-y-4 mt-10">
+        <div className="max-w-xl mx-auto space-y-4 mt-10 mb-5">
           <div className="collapse collapse-plus border border-base-300 bg-base-200 rounded-box">
             <input type="radio" name="dev-tinder-accordion" defaultChecked />
             <div className="collapse-title text-xl font-medium">

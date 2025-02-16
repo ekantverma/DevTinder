@@ -41,7 +41,7 @@ const ConnectionRequest = () => {
 
   if (!requests) {
     return (
-      <h1 className="text-center my-10 text-xl font-semibold">
+      <h1 className="text-center my-0 pt-20 text-xl font-semibold">
         Loading requests...
       </h1>
     );
@@ -49,7 +49,7 @@ const ConnectionRequest = () => {
 
   if (requests.length === 0) {
     return (
-      <h1 className="text-center my-10 text-xl font-semibold  my-0 pt-20 flex items-center justify-center h-screen">
+      <h1 className="text-center my-0 pt-20 text-xl font-semibold  my-0 pt-20 flex items-center justify-center h-screen">
         No requests found!
       </h1>
     );

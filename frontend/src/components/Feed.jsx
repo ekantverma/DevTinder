@@ -55,7 +55,7 @@ const Feed = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen bg-gradient-to-br from-gray-800 via-gray-900 to-black p-4">
+    <div className="flex flex-col justify-center items-center h-screen bg-gradient-to-br from-gray-800 via-gray-900 to-black p-4 my-0 pt-20">
       <div className={`w-full max-w-md transition-all ${animationClass}`}>
         <FeedCard
           feed={feed[currentIndex]}

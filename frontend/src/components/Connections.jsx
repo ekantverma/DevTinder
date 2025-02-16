@@ -29,11 +29,11 @@ const Connections = () => {
   }
 
   if (connections.length === 0) {
-    return <h1 className="text-center my-10 text-xl font-semibold">No connections found!</h1>;
+    return <h1 className="text-center text-xl font-semibold my-0 pt-20">No connections found!</h1>;
   }
 
   return (
-    <div className="flex flex-col items-center my-10 px-5 my-0 pt-20">
+    <div className="flex flex-col items-center px-5 my-0 pt-20">
       <h1 className="font-bold text-3xl mb-5">Connections</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full max-w-5xl">
         {connections.map((connection) => (
